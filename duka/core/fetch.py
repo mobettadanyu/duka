@@ -9,7 +9,9 @@ import requests
 
 from ..core.utils import Logger, is_dst
 
-URL = "https://cors-evader.glitch.me/fetch/https://www.dukascopy.com/datafeed/{currency}/{year}/{month:02d}/{day:02d}/{hour:02d}h_ticks.bi5"
+#https://datafeed.dukascopy.com/datafeed/BTCUSD/2023/02/10/BID_candles_min_1.bi5
+#URL = "https://cors-evader.glitch.me/fetch/https://www.dukascopy.com/datafeed/{currency}/{year}/{month:02d}/{day:02d}/{hour:02d}h_ticks.bi5"
+URL = "https://cors-evader.glitch.me/fetch/https://datafeed.dukascopy.com/datafeed/{currency}/{year}/{month:02d}/{day:02d}/BID_candles_min_1.bi5"
 ATTEMPTS = 5
 
 
@@ -51,7 +53,8 @@ def create_tasks(symbol, day):
         'month': day.month - 1,
         'day': day.day
     }
-    tasks = [asyncio.ensure_future(get(URL.format(**url_info, hour=i))) for i in range(0, 24)]
+    tasks = [asyncio.ensure_future(get(URL.format(**url_info, hour=i))) for i in range(0, 1)]
+    #used to be (0,24)
 
     # if is_dst(day):
     #     next_day = day + datetime.timedelta(days=1)
